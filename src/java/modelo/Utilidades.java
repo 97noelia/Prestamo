@@ -19,4 +19,15 @@ public class Utilidades {
         }
         return meses;
     }
+    public static ArrayList<Cuota> genereListaCuotas(int num_Cuotas, double importeTotalPrestamo){
+        ArrayList<Cuota> cuotas = new ArrayList<Cuota>();
+        double importeCuota = importeTotalPrestamo / num_Cuotas;
+        for (int i=1; i<= num_Cuotas; i++){
+            double intereses = importeCuota - importeCuota * (i - 1) / num_Cuotas;
+            double capital = importeCuota - intereses;
+            Cuota cuota = new Cuota(i, importeCuota, capital, intereses);
+            cuotas.add(cuota);
+        }
+        return cuotas;
+    }
 }

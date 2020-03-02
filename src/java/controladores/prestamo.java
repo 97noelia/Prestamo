@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Cuota;
 import modelo.Prestamo;
 import modelo.Utilidades;
 
@@ -86,11 +87,12 @@ public class prestamo extends HttpServlet {
         double interes = Double.parseDouble(request.getParameter("interes"));
         int tiempo = Integer.parseInt(request.getParameter("tiempo"));
         Prestamo prestamo = new Prestamo(cantidad, interes, tiempo);
-        
         request.setAttribute("prestamo", prestamo);
         
+        double importeTotal = prestamo.getImportePrestamo();
         
-        
+        ArrayList<Cuota> cuotas = Utilidades.genereListaCuotas(tiempo, importeTotal);
+        request.setAttribute("cuotas", cuotas);
         
         
         request.getRequestDispatcher("prestamo.jsp").forward(request, response);
