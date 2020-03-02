@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Prestamo;
 import modelo.Utilidades;
 
 /**
@@ -75,7 +76,24 @@ public class prestamo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        ArrayList<String> meses = Utilidades.getMeses();
+        request.setAttribute("meses", meses);
+        
+        String nombre = request.getParameter("nombre");
+        request.setAttribute("nombre", nombre);
+        
+        double cantidad = Double.parseDouble(request.getParameter("cantidad"));
+        double interes = Double.parseDouble(request.getParameter("interes"));
+        int tiempo = Integer.parseInt(request.getParameter("tiempo"));
+        Prestamo prestamo = new Prestamo(cantidad, interes, tiempo);
+        
+        request.setAttribute("prestamo", prestamo);
+        
+        
+        
+        
+        
+        request.getRequestDispatcher("prestamo.jsp").forward(request, response);
     }
 
     /**
